@@ -934,6 +934,94 @@ body {
   height: 24px;
 }
 
+.admin-dash-page {
+  min-height: calc(100vh - 80px);
+  padding: 34px 22px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.admin-dash-panel {
+  width: 100%;
+  max-width: 1080px;
+  background: linear-gradient(180deg, #ffffff 0%, #f5f9ff 100%);
+  border: 1px solid #d8e5f8;
+  border-radius: 20px;
+  box-shadow: 0 18px 44px rgba(16, 42, 86, 0.16);
+  padding: 24px 26px 44px;
+}
+
+.admin-dash-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-dash-top-btn {
+  min-width: 132px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+}
+
+.admin-dash-title {
+  text-align: center;
+  font-size: 2.15rem;
+  margin: 38px 0 8px;
+  color: #102a56;
+}
+
+.admin-dash-subtitle {
+  text-align: center;
+  color: #4b5f7d;
+  margin-bottom: 34px;
+  font-size: 1.02rem;
+}
+
+.admin-dash-center-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 290px));
+  justify-content: center;
+  gap: 20px;
+}
+
+.admin-dash-main-btn {
+  min-height: 58px;
+  font-size: 1.03rem;
+  letter-spacing: 0.2px;
+}
+
+@media (max-width: 768px) {
+  .admin-dash-page {
+    padding: 18px 12px;
+  }
+
+  .admin-dash-panel {
+    padding: 16px 14px 26px;
+  }
+
+  .admin-dash-title {
+    margin-top: 24px;
+    font-size: 1.55rem;
+  }
+
+  .admin-dash-subtitle {
+    margin-bottom: 20px;
+  }
+
+  .admin-dash-center-actions {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .admin-dash-top-btn,
+  .admin-dash-main-btn {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
 .legacy-signup-page {
   min-height: 100vh;
   background-color: #b8b8b8;
@@ -1474,5 +1562,518 @@ tbody tr:hover {
   .form-container {
     margin: 1rem auto;
     padding: 1rem;
+  }
+}
+
+/* ============================================
+   Global UI Refresh (interactive + modern)
+   ============================================ */
+
+:root {
+  --ui-bg: #f3f7ff;
+  --ui-surface: #ffffff;
+  --ui-surface-soft: #f8fbff;
+  --ui-text: #1d2939;
+  --ui-text-muted: #475467;
+  --ui-primary: #2563eb;
+  --ui-primary-hover: #1d4ed8;
+  --ui-border: #d9e2f2;
+  --ui-shadow: 0 8px 24px rgba(23, 40, 72, 0.12);
+  --ui-shadow-hover: 0 14px 30px rgba(23, 40, 72, 0.16);
+  --ui-radius: 14px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: radial-gradient(circle at 10% 10%, #e8f0ff 0%, var(--ui-bg) 40%, #eef4ff 100%);
+  color: var(--ui-text);
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #102a56;
+  letter-spacing: 0.2px;
+}
+
+a {
+  color: var(--ui-primary);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--ui-primary-hover);
+}
+
+button,
+.btn,
+.maintain-user-btn,
+.vendor-action-btn,
+.vendor-mini-btn,
+.vendor-status-cell-btn,
+.vendor-option-box,
+.chart-link-btn {
+  transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.25s ease, background-color 0.25s ease;
+}
+
+button:hover,
+.btn:hover,
+.maintain-user-btn:hover,
+.vendor-action-btn:hover,
+.vendor-mini-btn:hover,
+.vendor-status-cell-btn:hover,
+.vendor-option-box:hover,
+.chart-link-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  box-shadow: 0 10px 20px rgba(31, 63, 117, 0.18);
+}
+
+button:active,
+.btn:active,
+.maintain-user-btn:active,
+.vendor-action-btn:active,
+.vendor-mini-btn:active,
+.vendor-status-cell-btn:active,
+.vendor-option-box:active,
+.chart-link-btn:active {
+  transform: translateY(0);
+}
+
+button:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.25);
+  outline-offset: 2px;
+}
+
+.form-container,
+.card,
+.table-container,
+.vendor-page-panel,
+.vendor-subpage-panel,
+.maintain-user-panel,
+.legacy-auth-box,
+.legacy-dashboard-shell,
+.legacy-panel,
+.membership-page,
+.user-cart-page,
+.checkout-page {
+  background: linear-gradient(180deg, #ffffff 0%, var(--ui-surface-soft) 100%);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow);
+}
+
+.navbar {
+  background: linear-gradient(90deg, #1f3f75 0%, #2f4f86 100%);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.navbar-links a,
+.navbar-links button {
+  border-radius: 8px;
+  padding: 0.35rem 0.55rem;
+}
+
+.navbar-links a:hover,
+.navbar-links button:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.vendor-additem-input,
+input,
+select,
+textarea {
+  border-radius: 10px;
+  border: 1px solid #c8d6ec;
+  background-color: #fff;
+  color: var(--ui-text);
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover,
+.vendor-additem-input:hover,
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #93b0de;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.vendor-additem-input:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--ui-primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.btn,
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-secondary {
+  border-radius: 10px;
+  font-weight: 600;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.btn-success {
+  background: linear-gradient(90deg, #16a34a 0%, #15803d 100%);
+}
+
+.btn-danger {
+  background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+}
+
+.btn-secondary {
+  background: linear-gradient(90deg, #4b5563 0%, #374151 100%);
+}
+
+.dashboard-card,
+.product-card,
+.vendor-product-box,
+.vendor-request-box,
+.legacy-card,
+.legacy-vendor-card,
+.legacy-order-card,
+.legacy-user-vendor-card {
+  border: 1px solid var(--ui-border);
+  box-shadow: var(--ui-shadow);
+}
+
+.dashboard-card:hover,
+.product-card:hover,
+.vendor-product-box:hover,
+.vendor-request-box:hover,
+.legacy-card:hover,
+.legacy-vendor-card:hover,
+.legacy-order-card:hover,
+.legacy-user-vendor-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--ui-shadow-hover);
+}
+
+table thead {
+  background: linear-gradient(90deg, #1f3f75 0%, #2f4f86 100%);
+}
+
+th,
+td {
+  border-bottom: 1px solid #e5ecf7;
+}
+
+tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+  background-color: #f3f8ff;
+}
+
+.alert {
+  border-radius: 10px;
+  box-shadow: 0 6px 14px rgba(18, 47, 94, 0.08);
+}
+
+.chart-modal {
+  backdrop-filter: blur(3px);
+}
+
+.chart-container {
+  border-radius: 14px;
+  border: 1px solid var(--ui-border);
+}
+
+@media (max-width: 992px) {
+  .vendor-action-row {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+
+  .vendor-product-cards {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .vendor-action-row,
+  .vendor-product-cards,
+  .dashboard-grid,
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar-content {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .vendor-page-layout,
+  .vendor-subpage-layout,
+  .maintain-user-page {
+    padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   Full Page Polish (all routes)
+   ============================================ */
+
+@keyframes fadeInUpSoft {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page,
+.admin-login-panel,
+.legacy-signup-card,
+.legacy-auth-card,
+.vendor-page-panel,
+.vendor-subpage-panel,
+.user-screen-panel,
+.table-container,
+.card,
+.product-card,
+.dashboard-card,
+.vendor-transaction-card,
+.vendor-product-box,
+.vendor-request-box {
+  animation: fadeInUpSoft 0.35s ease-out;
+}
+
+.admin-login-page,
+.legacy-signup-page,
+.vendor-page-layout,
+.vendor-subpage-layout,
+.user-screen-layout,
+.maintain-user-page {
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(37, 99, 235, 0.12) 0%, transparent 32%),
+    radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.12) 0%, transparent 35%);
+}
+
+.admin-login-panel,
+.legacy-signup-card,
+.legacy-auth-card {
+  max-width: 980px;
+  border: 1px solid #d4e1f7;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(17, 38, 82, 0.2);
+}
+
+.admin-login-title,
+.legacy-auth-title {
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.admin-login-input,
+.legacy-signup-input,
+.user-category-select,
+.user-qty-select {
+  border-radius: 10px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.admin-login-btn,
+.legacy-signup-submit,
+.legacy-small-top-btn,
+.user-checkout-btn,
+.vendor-mini-btn,
+.vendor-action-btn,
+.maintain-user-btn,
+.vendor-option-box,
+.vendor-status-cell-btn,
+.vendor-additem-cell-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-login-btn::after,
+.legacy-signup-submit::after,
+.legacy-small-top-btn::after,
+.user-checkout-btn::after,
+.vendor-mini-btn::after,
+.vendor-action-btn::after,
+.maintain-user-btn::after,
+.vendor-option-box::after,
+.vendor-status-cell-btn::after,
+.vendor-additem-cell-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 15%, rgba(255, 255, 255, 0.24) 50%, transparent 85%);
+  transform: translateX(-120%);
+  transition: transform 0.55s ease;
+}
+
+.admin-login-btn:hover::after,
+.legacy-signup-submit:hover::after,
+.legacy-small-top-btn:hover::after,
+.user-checkout-btn:hover::after,
+.vendor-mini-btn:hover::after,
+.vendor-action-btn:hover::after,
+.maintain-user-btn:hover::after,
+.vendor-option-box:hover::after,
+.vendor-status-cell-btn:hover::after,
+.vendor-additem-cell-btn:hover::after {
+  transform: translateX(120%);
+}
+
+.page-title,
+.user-products-title,
+.vendor-subpage-title,
+.vendor-center-header,
+.user-center-bar,
+.success-popup-title,
+.success-thankyou {
+  text-shadow: 0 2px 8px rgba(22, 42, 80, 0.16);
+}
+
+.dashboard-grid {
+  align-items: stretch;
+}
+
+.dashboard-card {
+  border-radius: 16px;
+}
+
+.dashboard-card h3 {
+  font-size: 1.45rem;
+}
+
+.dashboard-card p {
+  opacity: 0.96;
+  margin-bottom: 1rem;
+}
+
+.page.container > p[style] {
+  color: var(--ui-text-muted) !important;
+  font-size: 1.05rem !important;
+}
+
+.page.container > div[style] {
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: var(--ui-shadow);
+}
+
+.vendor-transaction-card,
+.checkout-items-preview,
+.user-grand-total-row,
+.checkout-summary-bar,
+.user-center-bar,
+.user-products-title,
+.vendor-empty-state {
+  border-radius: 12px;
+}
+
+.vendor-transaction-head {
+  font-weight: 600;
+}
+
+.vendor-transaction-item-row,
+.checkout-item-row {
+  border-bottom: 1px dashed rgba(174, 184, 202, 0.35);
+  padding-bottom: 6px;
+}
+
+.vendor-transaction-item-row:last-child,
+.checkout-item-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.user-cart-head,
+.user-order-head,
+.vendor-status-label,
+.vendor-additem-head {
+  font-weight: 700;
+  letter-spacing: 0.25px;
+}
+
+.user-cart-cell,
+.user-order-cell,
+.vendor-status-cell,
+.vendor-additem-cell {
+  background-color: #355b97;
+}
+
+.success-readonly {
+  border-radius: 10px;
+}
+
+.table-container table tbody tr {
+  transition: transform 0.18s ease, background-color 0.2s ease;
+}
+
+.table-container table tbody tr:hover {
+  transform: translateX(2px);
+}
+
+.card,
+.product-card,
+.vendor-product-box,
+.vendor-request-box,
+.dashboard-card,
+.vendor-transaction-card {
+  will-change: transform;
+}
+
+@media (max-width: 900px) {
+  .admin-login-actions {
+    gap: 10px;
+  }
+
+  .admin-login-btn,
+  .legacy-signup-submit,
+  .user-checkout-btn,
+  .vendor-mini-btn,
+  .vendor-action-btn,
+  .maintain-user-btn {
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  .page.container > div[style] {
+    padding: 10px;
   }
 }
