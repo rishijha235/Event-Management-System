@@ -299,10 +299,6 @@ Admin can create vendor accounts with all categories
 - Advanced search and filters
 - Promotional codes and discounts
 
-## License
-
-This project is licensed under the MIT License.
-
 ## Support
 
 For issues or questions, please create an issue in the repository.
