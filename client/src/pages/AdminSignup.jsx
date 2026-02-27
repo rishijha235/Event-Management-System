@@ -85,7 +85,6 @@ const AdminSignup = () => {
           <div className="legacy-signup-row">
             <label htmlFor="category" className="legacy-signup-label">Category</label>
             <select id="category" name="category" value={formData.category} onChange={handleChange} className="legacy-signup-input" required>
-              <option value="">Drop Down</option>
               {categories.map((category) => (
                 <option key={category.value} value={category.value}>{category.label}</option>
               ))}
