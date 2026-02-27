@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { getDashboardPathByRole } from './utils/roleRedirect';
 
 // Pages
 import Index from './pages/Index';
@@ -39,28 +40,64 @@ import GuestList from './pages/GuestList';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, requiredRole }) => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return null;
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/index" replace />;
   }
 
-  if (requiredRole && user?.role !== requiredRole) {
+  if (!user?.role) {
     return <Navigate to="/index" replace />;
+  }
+
+  if (requiredRole && user?.role !== requiredRole) {
+    return <Navigate to={getDashboardPathByRole(user.role)} replace />;
   }
 
   return children;
 };
 
+const PublicRoute = ({ children }) => {
+  const { user, isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return null;
+  }
+
+  if (isAuthenticated && user?.role) {
+    return <Navigate to={getDashboardPathByRole(user.role)} replace />;
+  }
+
+  return children;
+};
+
+const RootRoute = () => {
+  const { user, isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return null;
+  }
+
+  if (isAuthenticated && user?.role) {
+    return <Navigate to={getDashboardPathByRole(user.role)} replace />;
+  }
+
+  return <Navigate to="/index" replace />;
+};
+
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/index" element={<Index />} />
-      <Route path="/admin/signup" element={<AdminSignup />} />
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/user/signup" element={<UserSignup />} />
-      <Route path="/user/login" element={<UserLogin />} />
-      <Route path="/vendor/login" element={<VendorLogin />} />
+      <Route path="/index" element={<PublicRoute><Index /></PublicRoute>} />
+      <Route path="/admin/signup" element={<PublicRoute><AdminSignup /></PublicRoute>} />
+      <Route path="/admin/login" element={<PublicRoute><AdminLogin /></PublicRoute>} />
+      <Route path="/user/signup" element={<PublicRoute><UserSignup /></PublicRoute>} />
+      <Route path="/user/login" element={<PublicRoute><UserLogin /></PublicRoute>} />
+      <Route path="/vendor/login" element={<PublicRoute><VendorLogin /></PublicRoute>} />
 
       {/* Admin Routes */}
       <Route
@@ -284,8 +321,8 @@ function AppRoutes() {
         }
       />
 
-      <Route path="/" element={<Navigate to="/index" replace />} />
-      <Route path="*" element={<Navigate to="/index" replace />} />
+      <Route path="/" element={<RootRoute />} />
+      <Route path="*" element={<RootRoute />} />
     </Routes>
   );
 }

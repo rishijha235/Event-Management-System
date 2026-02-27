@@ -1,24 +1,60 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { setAuthToken } from '../services/api';
+import { getCurrentSession, setAuthToken } from '../services/api';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const getStoredUser = () => {
+    const userData = localStorage.getItem('user');
+    if (!userData) return null;
+    try {
+      return JSON.parse(userData);
+    } catch {
+      localStorage.removeItem('user');
+      return null;
+    }
+  };
+
+  const [user, setUser] = useState(getStoredUser);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
 
+  const clearAuth = () => {
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setAuthToken(null);
+  };
+
   useEffect(() => {
-    const savedToken = localStorage.getItem('token');
-    if (savedToken) {
+    const initializeAuth = async () => {
+      const savedToken = localStorage.getItem('token');
+
+      if (!savedToken) {
+        setLoading(false);
+        return;
+      }
+
       setToken(savedToken);
       setAuthToken(savedToken);
-      const userData = localStorage.getItem('user');
-      if (userData) {
-        setUser(JSON.parse(userData));
+
+      try {
+        const response = await getCurrentSession();
+        if (response.data?.success && response.data?.user) {
+          setUser(response.data.user);
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+        } else {
+          clearAuth();
+        }
+      } catch {
+        clearAuth();
+      } finally {
+        setLoading(false);
       }
-    }
-    setLoading(false);
+    };
+
+    initializeAuth();
   }, []);
 
   const login = (userData, authToken) => {
@@ -30,11 +66,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setAuthToken(null);
+    clearAuth();
   };
 
   const value = {

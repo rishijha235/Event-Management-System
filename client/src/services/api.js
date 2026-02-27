@@ -21,7 +21,8 @@ export const adminLogin = (data) => API.post('/auth/admin/login', data);
 export const userSignup = (data) => API.post('/auth/user/signup', data);
 export const userLogin = (data) => API.post('/auth/user/login', data);
 export const vendorLogin = (data) => API.post('/vendor/login', data);
-export const logout = () => API.post('/logout');
+export const getCurrentSession = () => API.get('/auth/me');
+export const logout = () => API.post('/auth/logout');
 
 // User APIs
 export const getAdminProfile = () => API.get('/auth/admin/profile');

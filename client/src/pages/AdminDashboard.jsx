@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Button } from '../components/common';
 import { logout } from '../services/api';
 
 const AdminDashboard = () => {
@@ -20,33 +19,44 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="page container">
-      <h1 className="page-title">Admin Dashboard</h1>
-      <div style={{ maxWidth: '360px', display: 'grid', gap: '12px' }}>
-        <Button
-          label="Home"
-          onClick={() => navigate('/index')}
-          variant="primary"
-          block
-        />
-        <Button
-          label="Maintain User"
-          onClick={() => navigate('/admin/users')}
-          variant="success"
-          block
-        />
-        <Button
-          label="Maintain Vendor"
-          onClick={() => navigate('/admin/vendors')}
-          variant="success"
-          block
-        />
-        <Button
-          label="Logout"
-          onClick={handleLogout}
-          variant="danger"
-          block
-        />
+    <div className="admin-dash-page">
+      <div className="admin-dash-panel">
+        <div className="admin-dash-top-row">
+          <button
+            type="button"
+            className="btn btn-primary admin-dash-top-btn"
+            onClick={() => navigate('/index')}
+          >
+            Home
+          </button>
+          <button
+            type="button"
+            className="btn btn-danger admin-dash-top-btn"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
+
+        <h1 className="admin-dash-title">Admin Dashboard</h1>
+        <p className="admin-dash-subtitle">Welcome {user?.name || 'Admin'}</p>
+
+        <div className="admin-dash-center-actions">
+          <button
+            type="button"
+            className="btn btn-success admin-dash-main-btn"
+            onClick={() => navigate('/admin/users')}
+          >
+            Maintain User
+          </button>
+          <button
+            type="button"
+            className="btn btn-success admin-dash-main-btn"
+            onClick={() => navigate('/admin/vendors')}
+          >
+            Maintain Vendor
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,6 @@
 const Admin = require('../models/Admin');
+const User = require('../models/User');
+const Vendor = require('../models/Vendor');
 const generateToken = require('../utils/generateToken');
 
 // Admin Signup
@@ -85,4 +87,46 @@ exports.getAdminProfile = async (req, res) => {
 exports.logout = (req, res) => {
   res.clearCookie('token');
   res.status(200).json({ success: true, message: 'Logged out successfully' });
+};
+
+// Get Current Auth Session
+exports.getCurrentSession = async (req, res) => {
+  try {
+    const { id, role } = req.user;
+    let user = null;
+
+    if (role === 'admin') {
+      user = await Admin.findById(id).select('_id name email role');
+    } else if (role === 'user') {
+      user = await User.findById(id).select('_id name email role');
+    } else if (role === 'vendor') {
+      user = await Vendor.findById(id).select('_id name email role category status');
+    }
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Authenticated user not found' });
+    }
+
+    const dashboardPath =
+      role === 'admin'
+        ? '/admin/dashboard'
+        : role === 'vendor'
+          ? '/vendor/dashboard'
+          : '/user/dashboard';
+
+    res.status(200).json({
+      success: true,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        category: user.category,
+        status: user.status,
+      },
+      dashboardPath,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
